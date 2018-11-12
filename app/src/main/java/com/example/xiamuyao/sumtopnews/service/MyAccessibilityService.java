@@ -61,7 +61,7 @@ public class MyAccessibilityService extends AccessibilityService {
                     switch (s) {
                         // 东方头条主页
                         case XConstant.DONGFANG:
-                            List<AccessibilityNodeInfo> nodesById = findNodesById(event, "com.songheng.eastnews:id/jo");
+                            List<AccessibilityNodeInfo> nodesById = findNodesById(event, XConstantID.DONGFANGFLUSH);
 
                             if (nodesById != null && nodesById.size() > 0) {
                                 nodesById.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
@@ -77,9 +77,7 @@ public class MyAccessibilityService extends AccessibilityService {
                         //东方头条详情页
                         case XConstant.DONGFANGINFO:
                             Thread.sleep(2000);
-                            inputSehll(100, 500, 100, 0, 8000);
-                            Thread.sleep(3000);
-                            inputSehll(100, 500, 100, 0, 8000);
+                            inputSehll(100, 1000, 100, 0, 16000);
                             //返回
                             performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                             break;
@@ -99,40 +97,6 @@ public class MyAccessibilityService extends AccessibilityService {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-//                int i1 = PageUtil.PageType(event.getClassName().toString());
-
-                //如果是东方头条首页
-//                List<AccessibilityNodeInfo> infos = findNodesById(event, "com.songheng.eastnews:id/od");
-                //检测主页成功
-                //等待2秒
-                //点击进入
-                //等待3秒
-                //模拟下滑一次
-                //等待3秒
-                //模拟下滑一次
-                //检测一下查看全文的位置 并点击
-                //等待3秒
-                //模拟下滑一次
-                //等待3秒
-                //模拟下滑一次
-                //等待3秒
-                //模拟下滑一次
-                //模拟back按键
-//                try {
-//                    if (infos != null && infos.size() > 0) {
-//                        Thread.sleep(2000);
-//                        infos.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
-//                        Thread.sleep(2000);
-//                        List<AccessibilityNodeInfo> nodesById = findNodesById(event, "com.songheng.eastnews:id/ks");
-////                        nodesById.get(0).performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
-////                        inputSehll(100, 500, 100, -500, 3000);
-////                        List<AccessibilityNodeInfo> lookAll = event.getSource().findAccessibilityNodeInfosByText("点击查看全文");
-////                        lookAll.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
-//
-//                    }
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
                 break;
 
             default:
@@ -140,14 +104,15 @@ public class MyAccessibilityService extends AccessibilityService {
         }
     }
 
-    //    AccessibilityNodeInfo.ACTION_SCROLL_FORWARD 模拟滑动
-//    AccessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK); 模拟返回按键
+//       AccessibilityNodeInfo.ACTION_SCROLL_FORWARD 模拟滑动
+//       AccessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK); 模拟返回按键
+//       event.getSource().findAccessibilityNodeInfosByText("立即安装");
+
     @Override
     public void onInterrupt() {
-
+        LL.d("无障碍服务被中断了。");
     }
 
-    //event.getSource().findAccessibilityNodeInfosByText("立即安装");
     @SuppressLint("NewApi")
     public List<AccessibilityNodeInfo> findNodesById(AccessibilityEvent event, String viewId) {
         AccessibilityNodeInfo nodeInfo = event.getSource();
@@ -157,21 +122,16 @@ public class MyAccessibilityService extends AccessibilityService {
         return null;
     }
 
-//    inputSehll(100, 500, 100, -2000, 3000);
-
     /**
      * 移动点击屏幕
      *
-     * @param startX
-     * @param startY
-     * @param endX
-     * @param endY
+     * @param startX 开始X坐标
+     * @param startY 开始Y坐标
+     * @param endX   结束X坐标
+     * @param endY   结束Y坐标
      */
     public String inputSehll(int startX, int startY, int endX, int endY, int time) {
-        /*input swipe 100 500 100 -2000 1000*/
-        String s = RootCmd.execRootCmd("input swipe " + startX + " " + startY + " " + endX + " " + endY + " " + time);
-        return s;
-
+        return RootCmd.execRootCmd("input swipe " + startX + " " + startY + " " + endX + " " + endY + " " + time);
     }
 
 }
