@@ -13,12 +13,20 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
- * created by tea9 at 2018/11/24
+ * ================================================
+ * 作    者：夏沐尧  Github地址：https://github.com/XiaMuYaoDQX
+ * 版    本：1.0
+ * 创建日期： 2018/11/24
+ * 描    述：
+ * 修订历史：
+ * ================================================
  */
 public class DOMTest {
     public static void main(String[] args) {
 
-        Map<String, Integer> coordinateWithResourceId = getCoordinateWithResourceId("cn.com.spdb.mobilebank.per:id/tv_login_register_acc","/Users/shaomiao/Desktop/uidump.xml");
+        Map<String, Integer> coordinateWithResourceId = getCoordinateWithResourceId("cn.com.spdb.mobilebank.per:id/iv_adv","");
+//        Map<String, Integer> coordinateWithResourceId = getCoordinateWithText("1");
+
         System.out.println(coordinateWithResourceId);
 
     }
@@ -26,17 +34,48 @@ public class DOMTest {
     /**
      * 根据资源id获取坐标
      */
-    public static Map<String, Integer> getCoordinateWithResourceId(String resourceID, String url) {
+    public static Map<String, Integer> getCoordinateWithResourceId(String resourceID, String fileUrl) {
         Map<String, Integer> childCoordnate = new HashMap<>();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
-//            Document document = db.parse("E:\\uidump.xml");
-            File file = new File(url);
+
+            File file = new File(fileUrl);
             Document document = db.parse(file);
             NodeList node = document.getElementsByTagName("node");
             int bookCnt = node.getLength();
-            System.out.println("获取了" + bookCnt + "节点");
+            for (int i = 0; i < bookCnt; i++) {
+                Node book = node.item(i);
+                NamedNodeMap attrs = book.getAttributes();
+
+                for (int j = 0; j < attrs.getLength(); j++) {
+                    Node attr = attrs.item(j);
+                    if ("bounds".equals(attr.getNodeName())) {
+                        childCoordnate = getChildCoordnate(attr.getNodeValue());
+                    }
+                    if (resourceID.equals(attr.getNodeValue())) {
+                        return childCoordnate;
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static Map<String, Integer> getCoordinateWithText(String text, String fileUrl) {
+        Map<String, Integer> childCoordnate = new HashMap<>();
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            File file = new File(fileUrl);
+            Document document = db.parse(file);
+            NodeList node = document.getElementsByTagName("node");
+            int bookCnt = node.getLength();
+
             for (int i = 0; i < bookCnt; i++) {
                 Node book = node.item(i);
                 NamedNodeMap attrs = book.getAttributes();
@@ -45,8 +84,10 @@ public class DOMTest {
                     if ("bounds".equals(attr.getNodeName())) {
                         childCoordnate = getChildCoordnate(attr.getNodeValue());
                     }
-                    if (resourceID.equals(attr.getNodeValue())) {
-                        return childCoordnate;
+                    if ("text".equals(attr.getNodeName())) {
+                        if (text.equals(attr.getNodeValue())) {
+                            return childCoordnate;
+                        }
                     }
                 }
             }
