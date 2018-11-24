@@ -49,7 +49,8 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <activity android:name=".activity.Main2Activity"></activity>
+        <activity android:name=".activity.Main2Activity" />
+        <activity android:name=".activity.XActivity"></activity>
     </application>
 
 </manifest>

@@ -53,13 +53,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void getActivity(View view) {
-        if (RootCmd.haveRoot()) {
-            String str = RootCmd.execRootCmd("dumpsys activity");
-            Log.e("zheshisha a",str);
-        }
-    }
-
     // 打开中青看点
     public void startZhongQing(View view) {
         Intent in = new Intent();
