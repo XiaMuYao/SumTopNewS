@@ -18,9 +18,8 @@ public final class RootCmd {
 
     public static final String TAG = "RootCmd";
     private static boolean mHaveRoot = false;
-
     /**
-     * 判断机器Android是否已经root，即是否获取root权限
+     *   判断机器Android是否已经root，即是否获取root权限
      */
     public static boolean haveRoot() {
         if (!mHaveRoot) {
@@ -57,10 +56,8 @@ public final class RootCmd {
             dos.flush();
             String line = null;
             while ((line = dis.readLine()) != null) {
-                LL.d(line);
-                if (line.contains("mFocusedActivity")) {
-                    result = line;
-                }
+                Log.d("result", line);
+                result += line;
             }
             p.waitFor();
         } catch (Exception e) {
