@@ -56,7 +56,7 @@ public final class RootCmd {
             dos.flush();
             String line = null;
             while ((line = dis.readLine()) != null) {
-                Log.d("result", line);
+                LL.d(line);
                 result += line;
             }
             p.waitFor();

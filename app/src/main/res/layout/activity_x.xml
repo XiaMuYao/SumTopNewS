@@ -5,13 +5,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.XActivity">
-<Button
-    android:id="@+id/getActivity"
-    android:onClick="getActivity"
-    android:text="获取当前Activity"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/getActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="getActivity"
+        android:text="获取当前Activity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/gettext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="getTextByText"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="根据文字获取坐标"
+        app:layout_constraintStart_toEndOf="@+id/getActivity"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="保存当前xml"
+        android:onClick="saveXmlToLocal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getActivity" />
     <TextView
         android:id="@+id/tvText"
         android:layout_width="wrap_content"

@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void outShell(View view) {
         if (RootCmd.haveRoot()) {
-            String str = RootCmd.execRootCmd("dumpsys activity | findstr mFocusedActivity");
+            String str = RootCmd.execRootCmd("dumpsys activity");
+            Log.e(RootCmd.TAG,str);
         }
     }
 

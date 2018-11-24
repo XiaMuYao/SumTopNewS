@@ -15,13 +15,12 @@ import java.io.IOException;
  * 修订历史：
  * ================================================
  */
-public class AbdShellUtil {
+public class AdbShellUtil {
 
 
-    private static final String TAG = "AbdShellUtil";
+    private static final String TAG = "AdbShellUtil";
 
     public static String getActivity() {
-
         String result = "";
         DataOutputStream dos = null;
         DataInputStream dis = null;
@@ -30,8 +29,9 @@ public class AbdShellUtil {
             Process p = Runtime.getRuntime().exec("su");// 经过Root处理的android系统即有su命令
             dos = new DataOutputStream(p.getOutputStream());
             dis = new DataInputStream(p.getInputStream());
-            Log.e(TAG, "dumpsys activity | findstr mFocusedActivity");
-            dos.writeBytes("dumpsys activity | findstr mFocusedActivity" + "\n");
+
+            Log.e(TAG, "dumpsys activity");
+            dos.writeBytes("dumpsys activity" + "\n");
             dos.flush();
             dos.writeBytes("exit\n");
             dos.flush();
@@ -61,7 +61,6 @@ public class AbdShellUtil {
             }
         }
         return result;
-
-
     }
+
 }

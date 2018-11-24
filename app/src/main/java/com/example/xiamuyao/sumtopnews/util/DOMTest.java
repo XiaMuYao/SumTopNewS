@@ -65,7 +65,7 @@ public class DOMTest {
         return null;
     }
 
-    private static Map<String, Integer> getCoordinateWithText(String text, String fileUrl) {
+    public static Map<String, Integer> getCoordinateWithText(String text, String fileUrl) {
         Map<String, Integer> childCoordnate = new HashMap<>();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
