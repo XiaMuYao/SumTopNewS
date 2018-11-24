@@ -48,19 +48,21 @@ public class MyAccessibilityService extends AccessibilityService {
      *
      * @param event
      */
+    @SuppressLint("NewApi")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.d(TAG, "EventData ----> " + event);
+        Log.e(TAG, "EventData ----> " + event);
         switch (event.getEventType()) {
             //界面ui的改变(跳转页面)
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                LL.d("当前Activity" + event.getPackageName() + "\n" + event.getClassName());
+                LL.e("当前Activity" + event.getPackageName() + "\n" + event.getClassName());
                 String s = event.getClassName().toString();
+                LL.e("shaomiao:"+s);
                 try {
                     switch (s) {
                         // 东方头条主页
-                        case XConstant.DONGFANG:
+                        case XConstant.DONGFANG://  region description
                             List<AccessibilityNodeInfo> nodesById = findNodesById(event, XConstantID.DONGFANGFLUSH);
 
                             if (nodesById != null && nodesById.size() > 0) {
@@ -74,21 +76,54 @@ public class MyAccessibilityService extends AccessibilityService {
                                 infos.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
                             }
                             break;
+                        // endregion description
                         //东方头条详情页
-                        case XConstant.DONGFANGINFO:
+                        case XConstant.DONGFANGINFO://  region description
                             Thread.sleep(2000);
                             inputSehll(100, 1000, 100, 0, 16000);
                             //返回
                             performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-                            break;
+                            break;// endregion description
                         //东方头条详情页推送
-                        case XConstant.DONGFANGPUSHDIALOG:
+                        case XConstant.DONGFANGPUSHDIALOG://  region description
                             List<AccessibilityNodeInfo> infods = findNodesById(event, XConstantID.DONGFANGPUSHDIALOGCANCLD);
                             if (infods != null && infods.size() > 0) {
                                 infods.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
                                 //返回
                                 performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                             }
+                            break;// endregion description
+
+                        case XConstant.ZHONGQINGALERT: //中青首页
+                            //region description
+                            List<AccessibilityNodeInfo> zhognqing_nodesById = findNodesById(event,XConstantID.ZHONGQING_id);
+//                            performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+//                            if (zhognqing_nodesById != null && zhognqing_nodesById.size() > 0) {
+//                                zhognqing_nodesById.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
+//                            }
+                            Thread.sleep(2000);
+//                            List<AccessibilityNodeInfo> zhognqing_infos = findNodesById(event,XConstantID.ZHONGQING_REFRESH);
+//                            if (zhognqing_infos !=null&& zhognqing_infos.size()>0){
+//                                zhognqing_infos.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
+//                            }
+//                            Thread.sleep(5000);
+                            List<AccessibilityNodeInfo> zhongqing_items = findNodesById(event,XConstantID.ZHONGNQING_ITEM);
+
+                            if (zhongqing_items !=null && zhongqing_items.size()>0) {
+                                LL.e("当前Activity"+zhongqing_items.get(0).getViewIdResourceName());
+                                zhongqing_items.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                            }
+                            break;
+                        // endregion description
+                        case XConstant.ZHOGNQING_REDPACKET://中青红包页面
+                            performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                            break;
+                        case XConstant.ZHONGQING_WEBVIEW:
+                            // region description
+                            Thread.sleep(2000);
+                            inputSehll(100, 1000, 100, 0, 16000);
+                            performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                            // endregion description
                             break;
                         default:
                             break;

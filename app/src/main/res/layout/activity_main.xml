@@ -23,12 +23,16 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:onClick="settting"
         android:text="2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getroot" />
+        app:layout_constraintTop_toBottomOf="@+id/getroot"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="56dp" />
+    <!--<LinearLayout-->
+        <!--android:layout_width=""-->
+
+        <!--android:layout_height=""></LinearLayout>-->
 
     <Button
         android:id="@+id/start_task"
@@ -38,4 +42,40 @@
         android:text="跳转到东方头条并开始任务"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转到中青看点并开始任务"
+        android:onClick="startZhongQing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_task"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转到中青看点并开始任务"
+        android:onClick="startZhongQing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_task"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转到中青看点并开始任务"
+        android:onClick="startZhongQing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_task"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转到中青看点并开始任务"
+        android:onClick="startZhongQing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_task"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="@id/start_task"
+        android:onClick="outShell"
+        android:text="输出shell"/>
 </android.support.constraint.ConstraintLayout>

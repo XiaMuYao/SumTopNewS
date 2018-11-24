@@ -22,4 +22,10 @@ public class XConstantID {
      * 东方头条 首页 刷新
      */
     public static final String DONGFANGFLUSH = "com.songheng.eastnews:id/jo";
+
+
+    public static final String ZHONGQING_id = "cn.youth.news:id/tv_pass";// 中青看点红包
+    public static final String ZHONGQING_REFRESH="cn.youth.news:id/tv_home_tab";//中青刷新id
+    public static final String ZHONGNQING_ITEM="cn.youth.news:id/tv_article_title";//中青item
+
 }

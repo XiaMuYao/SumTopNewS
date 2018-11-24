@@ -26,4 +26,17 @@ public class XConstant {
      * 东方头条推送Dialog
      */
     public static final String DONGFANGPUSHDIALOG = "com.songheng.eastfirst.common.view.widget.dialog.PushDialog";
+
+
+    public static final String ZHONGQING = "com.weishang.wxrd.activity.MainActivity";
+
+    /**
+     * 中青首页
+     */
+    public static final String ZHONGQINGALERT = "com.weishang.wxrd.activity.MainActivity";//com.weishang.wxrd.activity.MainActivity
+    public static final String ZHONGQING_WEBVIEW = "com.weishang.wxrd.activity.WebViewActivity"; // 文章页面
+    public static final String ZHOGNQING_REDPACKET = "com.weishang.wxrd.ui.RedPacketFirstActivity";//红包页面
+
+
+
 }

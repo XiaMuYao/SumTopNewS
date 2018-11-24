@@ -1,5 +1,9 @@
 package com.example.xiamuyao.sumtopnews.util;
 
+/**
+ * created by tea9 at 2018/11/24
+ */
+
 import android.util.Log;
 
 import java.io.DataInputStream;
@@ -7,16 +11,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
- * ================================================
- * 作    者：夏沐尧  Github地址：https://github.com/XiaMuYaoDQX
- * 版    本：1.0
- * 创建日期： 2018/11/10
- * 描    述：
- * 修订历史：
- * ================================================
+ * Android运行linux命令
  */
+
 public final class RootCmd {
-    private static final String TAG = "RootCmd";
+
+    public static final String TAG = "RootCmd";
     private static boolean mHaveRoot = false;
     /**
      *   判断机器Android是否已经root，即是否获取root权限
@@ -25,13 +25,13 @@ public final class RootCmd {
         if (!mHaveRoot) {
             int ret = execRootCmdSilent("echo test"); // 通过执行测试命令来检测
             if (ret != -1) {
-                Log.i(TAG, "have root!");
+                Log.e(TAG, "have root!");
                 mHaveRoot = true;
             } else {
-                Log.i(TAG, "not root!");
+                Log.e(TAG, "not root!");
             }
         } else {
-            Log.i(TAG, "mHaveRoot = true, have root!");
+            Log.e(TAG, "mHaveRoot = true, have root!");
         }
         return mHaveRoot;
     }
@@ -45,11 +45,11 @@ public final class RootCmd {
         DataInputStream dis = null;
 
         try {
-            Process p = Runtime.getRuntime().exec("su");
+            Process p = Runtime.getRuntime().exec("su");// 经过Root处理的android系统即有su命令
             dos = new DataOutputStream(p.getOutputStream());
             dis = new DataInputStream(p.getInputStream());
 
-            Log.i(TAG, cmd);
+            Log.e(TAG, cmd);
             dos.writeBytes(cmd + "\n");
             dos.flush();
             dos.writeBytes("exit\n");
@@ -92,7 +92,7 @@ public final class RootCmd {
             Process p = Runtime.getRuntime().exec("su");
             dos = new DataOutputStream(p.getOutputStream());
 
-            Log.i(TAG, cmd);
+            Log.e(TAG, cmd);
             dos.writeBytes(cmd + "\n");
             dos.flush();
             dos.writeBytes("exit\n");
@@ -112,4 +112,5 @@ public final class RootCmd {
         }
         return result;
     }
+
 }
