@@ -12,8 +12,12 @@ import com.example.xiamuyao.sumtopnews.constant.XConstant;
 import com.example.xiamuyao.sumtopnews.constant.XConstantID;
 import com.example.xiamuyao.sumtopnews.util.LL;
 import com.example.xiamuyao.sumtopnews.util.RootCmd;
+import com.stericson.RootTools.RootTools;
+import com.stericson.RootTools.RootToolsException;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 /**
  * ================================================
@@ -31,7 +35,7 @@ public class MyAccessibilityService extends AccessibilityService {
 // 移动屏幕      adb shell input swipe 100 500 100 -2000 3000
 
     private String ex1Input = "input swipe 100 500 100 -2000 1000";
-    private String getACtivity = "dumpsys activity | findstr \"mFocusedActivity\"";
+    private String getACtivity = "dumpsys activity | findstr mFocusedActivity";
 
     public MyAccessibilityService() {
 
@@ -58,23 +62,29 @@ public class MyAccessibilityService extends AccessibilityService {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
                 LL.e("当前Activity" + event.getPackageName() + "\n" + event.getClassName());
                 String s = event.getClassName().toString();
-                LL.e("shaomiao:"+s);
+                LL.e("shaomiao:" + s);
                 try {
                     switch (s) {
                         // 东方头条主页
                         case XConstant.DONGFANG://  region description
-                            List<AccessibilityNodeInfo> nodesById = findNodesById(event, XConstantID.DONGFANGFLUSH);
-
-                            if (nodesById != null && nodesById.size() > 0) {
-                                nodesById.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                            }
-
-                            Thread.sleep(2000);
-
-                            List<AccessibilityNodeInfo> infos = findNodesById(event, XConstantID.DONGFANGMAINITEM);
-                            if (infos != null && infos.size() > 0) {
-                                infos.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                            }
+                            LL.d("进入了主页");
+                            String[] strings = new String[2];
+                            strings[0] = "su";
+                            strings[1] = "uiautomator dump /sdcard/dump.xml";
+                            List<String> list = RootTools.sendShell(strings, 0, 5000);
+                            LL.d(list.get(0));
+//                            List<AccessibilityNodeInfo> nodesById = findNodesById(event, XConstantID.DONGFANGFLUSH);
+//
+//                            if (nodesById != null && nodesById.size() > 0) {
+//                                nodesById.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
+//                            }
+//
+//                            Thread.sleep(2000);
+//
+//                            List<AccessibilityNodeInfo> infos = findNodesById(event, XConstantID.DONGFANGMAINITEM);
+//                            if (infos != null && infos.size() > 0) {
+//                                infos.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
+//                            }
                             break;
                         // endregion description
                         //东方头条详情页
@@ -96,7 +106,7 @@ public class MyAccessibilityService extends AccessibilityService {
 
                         case XConstant.ZHONGQINGALERT: //中青首页
                             //region description
-                            List<AccessibilityNodeInfo> zhognqing_nodesById = findNodesById(event,XConstantID.ZHONGQING_id);
+                            List<AccessibilityNodeInfo> zhognqing_nodesById = findNodesById(event, XConstantID.ZHONGQING_id);
 //                            performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
 //                            if (zhognqing_nodesById != null && zhognqing_nodesById.size() > 0) {
 //                                zhognqing_nodesById.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
@@ -107,10 +117,10 @@ public class MyAccessibilityService extends AccessibilityService {
 //                                zhognqing_infos.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
 //                            }
 //                            Thread.sleep(5000);
-                            List<AccessibilityNodeInfo> zhongqing_items = findNodesById(event,XConstantID.ZHONGNQING_ITEM);
+                            List<AccessibilityNodeInfo> zhongqing_items = findNodesById(event, XConstantID.ZHONGNQING_ITEM);
 
-                            if (zhongqing_items !=null && zhongqing_items.size()>0) {
-                                LL.e("当前Activity"+zhongqing_items.get(0).getViewIdResourceName());
+                            if (zhongqing_items != null && zhongqing_items.size() > 0) {
+                                LL.e("当前Activity" + zhongqing_items.get(0).getViewIdResourceName());
                                 zhongqing_items.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
                             }
                             break;
@@ -130,6 +140,12 @@ public class MyAccessibilityService extends AccessibilityService {
                     }
 
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (RootToolsException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (TimeoutException e) {
                     e.printStackTrace();
                 }
                 break;

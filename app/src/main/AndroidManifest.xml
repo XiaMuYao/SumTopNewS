@@ -23,16 +23,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
 
-                <action android:name="com.example.xiamuyao.sumtopnews.activity.MainActivity" />    <!-- 自定义的action-->
+                <!--<action android:name="com.example.xiamuyao.sumtopnews.activity.MainActivity" />    &lt;!&ndash; 自定义的action&ndash;&gt;-->
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-            </intent-filter>
+            <!--</intent-filter>-->
         </activity>
 
         <service
@@ -50,7 +50,22 @@
         </service>
 
         <activity android:name=".activity.Main2Activity" />
-        <activity android:name=".activity.XActivity"></activity>
+
+        <activity android:name=".activity.XActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="com.example.xiamuyao.sumtopnews.activity.MainActivity" />    <!-- 自定义的action-->
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+            </intent-filter>
+
+        </activity>
+
     </application>
 
 </manifest>
