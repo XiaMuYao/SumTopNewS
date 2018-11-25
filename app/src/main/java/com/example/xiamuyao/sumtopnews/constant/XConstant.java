@@ -1,7 +1,5 @@
 package com.example.xiamuyao.sumtopnews.constant;
 
-import android.os.Environment;
-
 /**
  * ================================================
  * 作    者：夏沐尧  Github地址：https://github.com/XiaMuYaoDQX
@@ -15,7 +13,8 @@ public class XConstant {
     /**
      * ui解析的xml文件路径
      */
-    public static String UIFILE = Environment.getExternalStorageDirectory().getPath()+"/uidump.xml";
+//    public static String UIFILE = Environment.getExternalStorageDirectory().getPath()+"/uidump.xml";
+    public static String UIFILE = "/sdcard/uidump.xml";
     /**
      * 1 东方头条详情页
      */

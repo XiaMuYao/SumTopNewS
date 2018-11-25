@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.xiamuyao.sumtopnews.R;
-import com.example.xiamuyao.sumtopnews.util.DOMTest;
+import com.example.xiamuyao.sumtopnews.constant.XConstant;
 import com.example.xiamuyao.sumtopnews.util.RootCmd;
 
 import java.io.BufferedReader;
@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * created by tea9 at 2018/11/24
@@ -47,15 +46,23 @@ public class DomTestActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn:
-
-                String xx = RootCmd.execRootCmd("cat /data/local/tmp/uidump.xml");
-                ReadTxtFile("/data/local/tmp/uidump.xml");
-                tv.setText(zz);
+                String xx = RootCmd.execRootCmd("cat /storage/emulated/0/uidump.xml");
+//                ReadTxtFile("/storage/emulated/0/uidump.xml");
+                String xml1 = RootCmd.execRootCmd("cat " + "/storage/emulated/0/uidump.xml");
+                Log.e("shaomiao",xml1);
+                tv.setText(xml1);
                 break;
             case R.id.btn1:
-                Map<String, Integer> coordinateWithResourceId = DOMTest.getCoordinateWithResourceId("cn.com.spdb.mobilebank.per:id/tv_login_register_acc", "/data/local/tmp/uidump.xml");
-                System.out.println("aaa" + coordinateWithResourceId);
-                tv.setText(coordinateWithResourceId.toString());
+//                String file_path = "/sdcard/uidump.xml";
+                String file_path = "/storage/sdcard0/aaa/xx.xml";
+                RootCmd.execRootCmd("uiautomator dump " + XConstant.UIFILE);
+                String xml = RootCmd.execRootCmd("cat " + XConstant.UIFILE);
+                Log.e("shaomiao",xml);
+                tv.setText(xml);
+//                Map<String, Integer> coordinateWithResourceId = DOMTest.getCoordinateWithText("asdklhasldjlasjd", XConstant.UIFILE);
+//                Map<String, Integer> coordinateWithResourceId = DOMTest.getCoordinateWithResourceId("com.songheng.eastnews:id/ak", file_path);
+//                System.out.println("aaa" + coordinateWithResourceId);
+//                tv.setText(coordinateWithResourceId.toString());
                 break;
         }
     }

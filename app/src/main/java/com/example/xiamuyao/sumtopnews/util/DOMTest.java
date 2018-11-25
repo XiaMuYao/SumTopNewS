@@ -39,7 +39,7 @@ public class DOMTest {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
-
+//            File file = new File(Environment.getExternalStorageDirectory(), fileUrl);
             File file = new File(fileUrl);
             Document document = db.parse(file);
             NodeList node = document.getElementsByTagName("node");
