@@ -69,12 +69,12 @@ public class DOMTest {
      * 根据资源id获取坐标 返回集合List
      */
     public static Map<String, Map<String, Integer>> getCoordinateListWithResourceId(String resourceID, String fileUrl) {
-        Map<String, Integer> childCoordnate1 = null;
         int index = 0;
         Map<String, Map<String, Integer>> childCoordnate = new HashMap<>();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
+
             File file = new File(fileUrl);
             Document document = db.parse(file);
             NodeList node = document.getElementsByTagName("node");
@@ -83,15 +83,10 @@ public class DOMTest {
                 Node book = node.item(i);
                 NamedNodeMap attrs = book.getAttributes();
                 for (int j = 0; j < attrs.getLength(); j++) {
-                    Node attr = attrs.item(j);
-                    if ("bounds".equals(attr.getNodeName())) {
-                        childCoordnate1 = getChildCoordnate(attr.getNodeValue());
-                    }
-                    if ("resource-id".equals(attr.getNodeName())) {
-                        if (resourceID.equals(attr.getNodeValue())) {
-                            childCoordnate.put(index + "", childCoordnate1);
-                            index++;
-                        }
+                    if (attrs.getNamedItem("resource-id").getNodeValue().equals(resourceID)) {
+                        childCoordnate.put(index + "", getChildCoordnate(attrs.getNamedItem("bounds").getNodeValue()));
+                        index++;
+                        break;
                     }
                 }
             }
@@ -145,13 +140,17 @@ public class DOMTest {
         int x1, x2, y1, y2;
 
         x1 = Integer.parseInt(nodeValue.substring(1, nodeValue.indexOf(",")));
-        x2 = Integer.parseInt(nodeValue.substring(nodeValue.indexOf(",") + 1, nodeValue.indexOf("]")));
+        y1 = Integer.parseInt(nodeValue.substring(nodeValue.indexOf(",") + 1, nodeValue.indexOf("]")));
 
-        y1 = Integer.parseInt(nodeValue.substring(nodeValue.indexOf("]") + 2, nodeValue.lastIndexOf(",")));
+        x2 = Integer.parseInt(nodeValue.substring(nodeValue.indexOf("]") + 2, nodeValue.lastIndexOf(",")));
         y2 = Integer.parseInt(nodeValue.substring(nodeValue.lastIndexOf(",") + 1, nodeValue.lastIndexOf("]")));
+
         map.put("x1", x1);
+
         map.put("x2", x2);
+
         map.put("y1", y1);
+
         map.put("y2", y2);
 
         return map;
