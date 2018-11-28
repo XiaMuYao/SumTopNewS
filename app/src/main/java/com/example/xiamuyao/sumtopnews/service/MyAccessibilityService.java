@@ -67,12 +67,13 @@ public class MyAccessibilityService extends AccessibilityService {
                     switch (s) {
                         // 东方头条主页
                         case XConstant.DONGFANG://  region description
-                            LL.d("进入了主页");
+                            LL.e("进入了主页");
                             String[] strings = new String[2];
                             strings[0] = "su";
                             strings[1] = "uiautomator dump /sdcard/dump.xml";
                             List<String> list = RootTools.sendShell(strings, 0, 5000);
-                            LL.d(list.get(0));
+                            LL.e(list.get(0));
+                            LL.e("hhhhhh");
 //                            List<AccessibilityNodeInfo> nodesById = findNodesById(event, XConstantID.DONGFANGFLUSH);
 //
 //                            if (nodesById != null && nodesById.size() > 0) {

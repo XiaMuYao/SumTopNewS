@@ -1,10 +1,7 @@
 package com.example.xiamuyao.sumtopnews.activity;
 
-import android.os.Environment;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.uiautomator.UiDevice;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,7 +10,6 @@ import com.example.xiamuyao.sumtopnews.constant.XConstant;
 import com.example.xiamuyao.sumtopnews.util.AdbShellUtil;
 import com.example.xiamuyao.sumtopnews.util.DOMTest;
 import com.example.xiamuyao.sumtopnews.util.LL;
-import com.example.xiamuyao.sumtopnews.util.RootCmd;
 import com.stericson.RootTools.RootTools;
 import com.stericson.RootTools.RootToolsException;
 
@@ -43,8 +39,8 @@ public class XActivity extends AppCompatActivity {
                     strings[0] = "su";
                     strings[1] = "uiautomator dump /sdcard/dump.xml";
                     list = RootTools.sendShell(strings, 0, 300000);
-
-                    LL.d(list.get(0));
+                    LL.e("shaomiao");
+                    LL.e(list.get(0));
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (RootToolsException e) {
