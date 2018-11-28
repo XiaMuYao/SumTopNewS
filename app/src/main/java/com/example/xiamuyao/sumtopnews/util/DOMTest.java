@@ -24,7 +24,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class DOMTest {
     public static void main(String[] args) {
 
-        Map<String, Integer> coordinateWithResourceId = getCoordinateWithResourceId("cn.com.spdb.mobilebank.per:id/iv_adv","");
+        Map<String, Integer> coordinateWithResourceId = getCoordinateWithResourceId("cn.com.spdb.mobilebank.per:id/iv_adv", "");
 //        Map<String, Integer> coordinateWithResourceId = getCoordinateWithText("1");
 
         System.out.println(coordinateWithResourceId);
@@ -59,6 +59,43 @@ public class DOMTest {
                 }
 
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 根据资源id获取坐标 返回集合List
+     */
+    public static Map<String, Map<String, Integer>> getCoordinateListWithResourceId(String resourceID, String fileUrl) {
+        Map<String, Integer> childCoordnate1 = null;
+        int index = 0;
+        Map<String, Map<String, Integer>> childCoordnate = new HashMap<>();
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            File file = new File(fileUrl);
+            Document document = db.parse(file);
+            NodeList node = document.getElementsByTagName("node");
+            int bookCnt = node.getLength();
+            for (int i = 0; i < bookCnt; i++) {
+                Node book = node.item(i);
+                NamedNodeMap attrs = book.getAttributes();
+                for (int j = 0; j < attrs.getLength(); j++) {
+                    Node attr = attrs.item(j);
+                    if ("bounds".equals(attr.getNodeName())) {
+                        childCoordnate1 = getChildCoordnate(attr.getNodeValue());
+                    }
+                    if ("resource-id".equals(attr.getNodeName())) {
+                        if (resourceID.equals(attr.getNodeValue())) {
+                            childCoordnate.put(index + "", childCoordnate1);
+                            index++;
+                        }
+                    }
+                }
+            }
+            return childCoordnate;
         } catch (Exception e) {
             e.printStackTrace();
         }
