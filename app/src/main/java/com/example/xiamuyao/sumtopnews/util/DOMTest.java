@@ -6,7 +6,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -24,7 +26,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class DOMTest {
     public static void main(String[] args) {
 
-        Map<String, Integer> coordinateWithResourceId = getCoordinateWithResourceId("cn.com.spdb.mobilebank.per:id/iv_adv", "");
+        Map<String, Integer> coordinateWithResourceId = getCoordinateWithText("确认转账", "E:\\miao.xml");
+
 //        Map<String, Integer> coordinateWithResourceId = getCoordinateWithText("1");
 
         System.out.println(coordinateWithResourceId);
@@ -35,11 +38,9 @@ public class DOMTest {
      * 根据资源id获取坐标
      */
     public static Map<String, Integer> getCoordinateWithResourceId(String resourceID, String fileUrl) {
-        Map<String, Integer> childCoordnate = new HashMap<>();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
-//            File file = new File(Environment.getExternalStorageDirectory(), fileUrl);
             File file = new File(fileUrl);
             Document document = db.parse(file);
             NodeList node = document.getElementsByTagName("node");
@@ -47,18 +48,11 @@ public class DOMTest {
             for (int i = 0; i < bookCnt; i++) {
                 Node book = node.item(i);
                 NamedNodeMap attrs = book.getAttributes();
-
-                for (int j = 0; j < attrs.getLength(); j++) {
-                    Node attr = attrs.item(j);
-                    if ("bounds".equals(attr.getNodeName())) {
-                        childCoordnate = getChildCoordnate(attr.getNodeValue());
-                    }
-                    if (resourceID.equals(attr.getNodeValue())) {
-                        return childCoordnate;
-                    }
+                if (attrs.getNamedItem("resource-id").getNodeValue().equals(resourceID)) {
+                    return getChildCoordnate(attrs.getNamedItem("bounds").getNodeValue());
                 }
-
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +62,7 @@ public class DOMTest {
     /**
      * 根据资源id获取坐标 返回集合List
      */
-    public static Map<String, Map<String, Integer>> getCoordinateListWithResourceId(String resourceID, String fileUrl) {
+    public static Map<String, Map<String, Integer>> getCoordinateListWithResourceId(String resourceID, String fileUrl, List<String> shieldStr) {
         int index = 0;
         Map<String, Map<String, Integer>> childCoordnate = new HashMap<>();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -79,17 +73,23 @@ public class DOMTest {
             Document document = db.parse(file);
             NodeList node = document.getElementsByTagName("node");
             int bookCnt = node.getLength();
+
             for (int i = 0; i < bookCnt; i++) {
                 Node book = node.item(i);
                 NamedNodeMap attrs = book.getAttributes();
-                for (int j = 0; j < attrs.getLength(); j++) {
-                    if (attrs.getNamedItem("resource-id").getNodeValue().equals(resourceID)) {
-                        childCoordnate.put(index + "", getChildCoordnate(attrs.getNamedItem("bounds").getNodeValue()));
-                        index++;
-                        break;
+                if (attrs.getNamedItem("resource-id").getNodeValue().equals(resourceID)) {
+                    Node item = node.item(i + 3);
+                    NamedNodeMap attributes = item.getAttributes();
+                    for (String s : shieldStr) {
+                        if (!attributes.getNamedItem("text").getNodeValue().equals(s)) {
+                            childCoordnate.put(index + "", getChildCoordnate(attrs.getNamedItem("bounds").getNodeValue()));
+                            index++;
+                        }
                     }
+
                 }
             }
+
             return childCoordnate;
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +98,6 @@ public class DOMTest {
     }
 
     public static Map<String, Integer> getCoordinateWithText(String text, String fileUrl) {
-        Map<String, Integer> childCoordnate = new HashMap<>();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
 
@@ -111,18 +110,11 @@ public class DOMTest {
             for (int i = 0; i < bookCnt; i++) {
                 Node book = node.item(i);
                 NamedNodeMap attrs = book.getAttributes();
-                for (int j = 0; j < attrs.getLength(); j++) {
-                    Node attr = attrs.item(j);
-                    if ("bounds".equals(attr.getNodeName())) {
-                        childCoordnate = getChildCoordnate(attr.getNodeValue());
-                    }
-                    if ("text".equals(attr.getNodeName())) {
-                        if (text.equals(attr.getNodeValue())) {
-                            return childCoordnate;
-                        }
-                    }
+                if (attrs.getNamedItem("text").getNodeValue().equals(text)) {
+                    return getChildCoordnate(attrs.getNamedItem("bounds").getNodeValue());
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
